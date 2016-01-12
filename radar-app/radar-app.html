@@ -1,14 +1,22 @@
 <head>
   <title>radar-app</title>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCMy95QAeFlYo1ZW4I52OhDVLIi3gDfPJg&sensor=false">
+type="text/javascript">
+</script>
 </head>
 
 <body>
   <h1>Welcome to Meteor!</h1>
 
   {{> hello}}
+
+<div id="map-canvas" style="height: 1800px; width: 1800px"></div>
 </body>
 
 <template name="hello">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
+
 </template>
+
+

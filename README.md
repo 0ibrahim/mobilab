@@ -6,3 +6,4 @@ Ibrahim Sheikh
 Larissa Moraes
 Polyana Barboza
 Austen Novis
+Fernanda Duarte

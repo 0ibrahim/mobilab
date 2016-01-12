@@ -22,7 +22,16 @@ if (Meteor.isClient) {
 
       var map = new google.maps.Map(document.getElementById("map-canvas"),
           mapOptions);
-  };
+      var infoWindow = new google.maps.InfoWindow(), marker, i;
+      var markers = [{lat:-23.397, lng:-46.644},{lat:-25.397,lng: -46.644},{lat:-21.397,lng: -46.644}];
+     // myLatLng={lat:-23.397, lng:-46.644};
+      for( i = 0; i < markers.length; i++ ) {
+            newmarker = new google.maps.Marker({
+            position: markers[i],
+            map: map});
+        };
+
+  }
 
 
 }

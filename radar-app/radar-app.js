@@ -14,6 +14,17 @@ if (Meteor.isClient) {
       Session.set('counter', Session.get('counter') + 1);
     }
   });
+   Template.hello.rendered = function () {
+      var mapOptions = {
+        center: new google.maps.LatLng(-23.397, -46.644),
+        zoom: 10
+      };
+
+      var map = new google.maps.Map(document.getElementById("map-canvas"),
+          mapOptions);
+  };
+
+
 }
 
 if (Meteor.isServer) {

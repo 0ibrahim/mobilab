@@ -25,7 +25,7 @@ if (Meteor.isClient) {
         mapOptions);
     var infoWindow = new google.maps.InfoWindow(), marker, i;
       console.log("this is running");
-
+/*
     HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
         console.log("i am in the isClient");
         console.log(result.content);
@@ -51,10 +51,50 @@ if (Meteor.isClient) {
               icon: icon,
               map: map});
           };
-    });
 
-    //var markers = [{lat:-23.397, lng:-46.644},{lat:-25.397,lng: -46.644},{lat:-21.397,lng: -46.644}];
-   // myLatLng={lat:-23.397, lng:-46.644};
+    });*/
+
+////1015-10-0 5:00:00 5:00:00 301703  R. EnÃ©as De Camargo, 36  1 -23.418553  -46.805319
+    HTTP.get(Meteor.absoluteUrl("/data/bus_path.csv"), function(err,result) {
+       // console.log(result.content);
+        var path_Data = result.content;
+        var parsedpath_Data = CSVToArray(path_Data, ",");
+        console.log(parsedpath_Data[0]);
+        parsedpath_Data.shift();
+        //markers = parsedStopsData;
+        var prev = 0;
+        var busline = [];
+        var road = '';
+        for (i in parsedpath_Data) {
+          if (parsedpath_Data[prev][0] != parsedpath_Data[i][0]){ 
+            console.log(road);
+            var color = '#'+Math.floor(Math.random()*16777215).toString(16);
+
+    /*        var result = HTTP.call('GET','https://roads.googleapis.com/v1/snapToRoads?path=' + road + '&interpolate=true&key=AIzaSyCMy95QAeFlYo1ZW4I52OhDVLIi3gDfPJg',{},function(err,result){
+                  return result;
+                    });
+            console.log(result);
+*/
+            prev=i;
+            busPath = new google.maps.Polyline({
+              path: busline,
+              geodesic: true,
+              strokeColor: color,
+              strokeOpacity: 1.0,
+              strokeWeight: 2
+              });
+            busline=[];
+            road=' ';
+            busline.push({lat: parseFloat(parsedpath_Data[i][6]), lng: parseFloat(parsedpath_Data[i][7])});
+            road = road.concat(parsedpath_Data[i][6]+',' + parsedpath_Data[i][7]);
+            busPath.setMap(map);
+          }
+          else{
+            busline.push({lat: parseFloat(parsedpath_Data[i][6]), lng: parseFloat(parsedpath_Data[i][7])});
+            road= road.concat(parsedpath_Data[i][6]+',' + parsedpath_Data[i][7])+'|';
+          }
+        };
+    });
   }
 }
 

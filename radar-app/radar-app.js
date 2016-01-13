@@ -24,12 +24,18 @@ if (Meteor.isClient) {
           mapOptions);
       var infoWindow = new google.maps.InfoWindow(), marker, i;
       var markers = [{lat:-23.397, lng:-46.644},{lat:-24.397,lng: -46.644},{lat:-22.397,lng: -46.644}];
-      //var image = "images/bus.png";
+      var icon = {
+          url: "../img/bus.png", // url
+          scaledSize: new google.maps.Size(30, 30), // scaled size
+          origin: new google.maps.Point(0,0), // origin
+          anchor: new google.maps.Point(0, 0) // anchor
+      };
      // myLatLng={lat:-23.397, lng:-46.644};
       for( i = 0; i < markers.length; i++ ) {
             newmarker = new google.maps.Marker({
             position: markers[i],
-            map: map
+            map: map,
+            icon: icon
             });
         };
 

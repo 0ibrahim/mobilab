@@ -34,6 +34,12 @@ if (Meteor.isClient) {
         console.log(parsedStopsData);
         parsedStopsData.shift();
         markers = parsedStopsData;
+        var icon = {
+          url: "../img/bus.png", // url
+          scaledSize: new google.maps.Size(30, 30), // scaled size
+          origin: new google.maps.Point(0,0), // origin
+          anchor: new google.maps.Point(0, 0) // anchor
+        };
 
         console.log(markers.length);
         for( i = 0; i < markers.length; i++ ) {
@@ -42,15 +48,14 @@ if (Meteor.isClient) {
               console.log(point);
               newmarker = new google.maps.Marker({
               position: point,
+              icon: icon,
               map: map});
           };
     });
 
     //var markers = [{lat:-23.397, lng:-46.644},{lat:-25.397,lng: -46.644},{lat:-21.397,lng: -46.644}];
    // myLatLng={lat:-23.397, lng:-46.644};
-}
-
-
+  }
 }
 
 if (Meteor.isServer) {

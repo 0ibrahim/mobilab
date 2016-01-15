@@ -25,6 +25,38 @@ if (Meteor.isClient) {
         mapOptions);
     var infoWindow = new google.maps.InfoWindow(), marker, i;
       console.log("this is running");
+
+'R. da  Consolação  nº  1.272 (Sentido  Centro/Bairro)'
+//parsing addresses
+
+  HTTP.get(Meteor.absoluteUrl("/data/addresses.csv"), function(err,result) {
+         // console.log(result.content);
+          var addr_Data = result.content;
+          var parsedaddr_Data = CSVToArray(addr_Data, ",");
+          console.log(parsedaddr_Data[30]);
+          console.log(addressTOstring(parsedaddr_Data[30]));
+          /*
+          HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + addressTOstring(parsedaddr_Data[30])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
+                console.log(result.content);
+                  });
+*/
+  });
+
+  HTTP.get(Meteor.absoluteUrl("/data/addresses2.csv"), function(err,result) {
+         // console.log(result.content);
+          var addr_Data = result.content;
+          var parsedaddr_Data = CSVToArray(addr_Data, ",");
+          console.log(parsedaddr_Data[38]);
+          console.log(address2TOstring(parsedaddr_Data[38]));
+          /*
+          HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address2TOstring(parsedaddr_Data[38])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
+                console.log(result.content);
+                  });
+*/
+  });
+
+
+
 /*
     HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
         console.log("i am in the isClient");
@@ -59,7 +91,6 @@ if (Meteor.isClient) {
        // console.log(result.content);
         var path_Data = result.content;
         var parsedpath_Data = CSVToArray(path_Data, ",");
-        console.log(parsedpath_Data[0]);
         parsedpath_Data.shift();
         //markers = parsedStopsData;
         var prev = 0;
@@ -67,7 +98,6 @@ if (Meteor.isClient) {
         var road = '';
         for (i in parsedpath_Data) {
           if (parsedpath_Data[prev][0] != parsedpath_Data[i][0]){ 
-            console.log(road);
             var color = '#'+Math.floor(Math.random()*16777215).toString(16);
 
     /*        var result = HTTP.call('GET','https://roads.googleapis.com/v1/snapToRoads?path=' + road + '&interpolate=true&key=AIzaSyCMy95QAeFlYo1ZW4I52OhDVLIi3gDfPJg',{},function(err,result){
@@ -185,4 +215,55 @@ function CSVToArray( strData, strDelimiter ){
 
     // Return the parsed data.
     return( arrData );
+}
+
+'R. da  Consolação  nº  1.272 (Sentido  Centro/Bairro)'
+function addressTOstring(loc_array){
+  var add_string = '';
+  for(i =2; i <= loc_array.length; i++){
+ 
+    if (loc_array[i].includes('n0'))
+    {
+      //do not add
+    }
+    else if (loc_array[i].includes('('))
+    {
+      add_string = add_string.concat('sau+paulo');
+      console.log(add_string);
+      return add_string;
+    }
+    else
+    {
+      add_string = add_string.concat(loc_array[i] + '+');
+
+    }
+
+  }
+
+return add_string;
+}
+
+function address2TOstring(loc_array){
+  var add_string = '';
+  for(i =2; i <= loc_array.length; i++){
+ 
+    if (loc_array[i].includes('n0'))
+    {
+      //do not add
+    }
+    else if (loc_array[i].includes('/'))
+    {
+      add_string = add_string.concat('sau+paulo');
+      console.log(add_string);
+      return add_string;
+    }
+    else
+    {
+      add_string = add_string.concat(loc_array[i] + '+');
+
+    }
+
+  }
+
+return add_string;
 }

@@ -84,7 +84,8 @@ if (Meteor.isClient) {
 
     });*/
 
-////1015-10-0 5:00:00 5:00:00 301703  R. EnÃ©as De Camargo, 36  1 -23.418553  -46.805319
+//shapes
+/*
     HTTP.get(Meteor.absoluteUrl("/data/shapes.txt"), function(err,result) {
        // console.log(result.content);
         var path_Data = result.content;
@@ -115,9 +116,10 @@ if (Meteor.isClient) {
             busline.push({lat: parseFloat(parsedpath_Data[i][1]), lng: parseFloat(parsedpath_Data[i][2])});
           }
         };
-    });
+    });*/
 
   //radars
+  /*
 HTTP.get(Meteor.absoluteUrl("/data/Latitude e Longitude.csv"), function(err,result) {
         var radarData = result.content;
         var parsedradarData = CSVToArray(radarData, ",");
@@ -140,6 +142,21 @@ HTTP.get(Meteor.absoluteUrl("/data/Latitude e Longitude.csv"), function(err,resu
           };
 
     });
+*/
+//addresses
+
+  HTTP.get(Meteor.absoluteUrl("/data/all_addresses.csv"), function(err,result) {
+         // console.log(result.content);
+          var addr_Data2 = result.content;
+          var parsedaddr_Data2 = CSVToArray(addr_Data2, ",");
+          parsedaddr_Data2.shift();
+          console.log(parsedaddr_Data2[30]);
+          /* 
+          HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address3TOstring(parsedaddr_Data2[30])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
+                console.log(result.content);
+                  });*/
+
+  });
 
 
 
@@ -290,3 +307,38 @@ function address2TOstring(loc_array){
 
 return add_string;
 }
+
+function address3TOstring(loc_array){
+  var add_string = '';
+  for(i =11; i <= loc_array.length; i++){
+ 
+    if (loc_array[i].includes('n0'))
+    {
+      //do not add
+    }
+    else if (loc_array[i].includes(','))
+    {
+      add_string = add_string.concat(loc_array[i].substring(0,loc_array[i].indexOf(",")));
+      add_string = add_string.concat('+sau+paulo');
+      for (j=i;j<loc_array.length;j++)
+      {
+        if(parseInt(loc_array[j]) == loc_array[j]){
+          add_string=loc_array[j].concat('+' + add_string);
+        }
+      }
+      console.log(add_string);
+      return add_string;
+    }
+    else
+    {
+      add_string = add_string.concat(loc_array[i] + '+');
+
+    }
+
+  }
+
+return add_string;
+}
+
+
+//

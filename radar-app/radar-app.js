@@ -1,3 +1,6 @@
+
+Stops = new Mongo.Collection("stops");
+
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
@@ -11,7 +14,29 @@ if (Meteor.isClient) {
   Template.hello.events({
     'click button': function () {
       // increment the counter when button is clicked
-      //Session.set('counter', Session.get('counter') + 1);
+      //Session.set('counter', Session.get('counter') + 1);    v
+    //var stops = Stops.find();
+    var icon = {
+      url: "../img/bus.png", // url
+      scaledSize: new google.maps.Size(30, 30), // scaled size
+      origin: new google.maps.Point(0,0), // origin
+      anchor: new google.maps.Point(0, 0) // anchor
+    };
+
+    // console.log(markers.length);
+    // for( i = 0; i < markers.length; i++ ) {
+
+    //   };
+
+    Stops.find().forEach(function(result){
+          var point = {lat: parseFloat(result.stop_lat), lng: parseFloat(result.stop_lon)};
+          console.log("Plotting");
+          console.log(point);
+          newmarker = new google.maps.Marker({
+          position: point,
+          icon: icon,
+          map: map});
+    });
     }
   });
  
@@ -21,39 +46,24 @@ if (Meteor.isClient) {
       zoom: 10
     };
 
-    var map = new google.maps.Map(document.getElementById("map-canvas"),
+    map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);
     var infoWindow = new google.maps.InfoWindow(), marker, i;
-      console.log("this is running");
-/*
-    HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
-        console.log("i am in the isClient");
-        console.log(result.content);
-        var stopsData = result.content;
-        var parsedStopsData = CSVToArray(stopsData, ",");
-        console.log(parsedStopsData);
-        parsedStopsData.shift();
-        markers = parsedStopsData;
-        var icon = {
-          url: "../img/bus.png", // url
-          scaledSize: new google.maps.Size(30, 30), // scaled size
-          origin: new google.maps.Point(0,0), // origin
-          anchor: new google.maps.Point(0, 0) // anchor
-        };
+    console.log("this is running");
 
-        console.log(markers.length);
-        for( i = 0; i < markers.length; i++ ) {
-              var point = {lat: parseFloat(markers[i][3]), lng: parseFloat(markers[i][4])};
-              console.log("Plotting");
-              console.log(point);
-              newmarker = new google.maps.Marker({
-              position: point,
-              icon: icon,
-              map: map});
-          };
 
-    });*/
+    // HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
+    //     console.log("i am in the isClient");
+    //     console.log(result.content);
+    //     var stopsData = result.content;
+    //     var parsedStopsData = CSVToArray(stopsData, ",");
+    //     console.log(parsedStopsData);
+    //     parsedStopsData.shift();
+        
 
+    // });
+
+  /*
 ////1015-10-0 5:00:00 5:00:00 301703  R. EnÃ©as De Camargo, 36  1 -23.418553  -46.805319
     HTTP.get(Meteor.absoluteUrl("/data/bus_path.csv"), function(err,result) {
        // console.log(result.content);
@@ -74,7 +84,7 @@ if (Meteor.isClient) {
                   return result;
                     });
             console.log(result);
-*/
+
             prev=i;
             busPath = new google.maps.Polyline({
               path: busline,
@@ -95,12 +105,27 @@ if (Meteor.isClient) {
           }
         };
     });
+  */
+
   }
 }
+
+
+
+// while (stops.hasNext()) {
+//    print(tojson(stops.next()));
+// }
+// Stops.each(function(err, item){
+//   console.log(item);
+//   console.log("this is an item");
+// });
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+    console.log("this is running");
+
+
   });
 }
 

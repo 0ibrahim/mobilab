@@ -25,7 +25,7 @@ if (Meteor.isClient) {
         mapOptions);
     var infoWindow = new google.maps.InfoWindow(), marker, i;
       console.log("this is running");
-
+/*
 'R. da  Consolação  nº  1.272 (Sentido  Centro/Bairro)'
 //parsing addresses
 
@@ -39,9 +39,7 @@ if (Meteor.isClient) {
           HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + addressTOstring(parsedaddr_Data[30])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
                 console.log(result.content);
                   });
-*/
   });
-
   HTTP.get(Meteor.absoluteUrl("/data/addresses2.csv"), function(err,result) {
          // console.log(result.content);
           var addr_Data = result.content;
@@ -52,9 +50,9 @@ if (Meteor.isClient) {
           HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address2TOstring(parsedaddr_Data[38])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
                 console.log(result.content);
                   });
-*/
-  });
 
+  });
+*/
 
 
 /*
@@ -87,9 +85,10 @@ if (Meteor.isClient) {
     });*/
 
 ////1015-10-0 5:00:00 5:00:00 301703  R. EnÃ©as De Camargo, 36  1 -23.418553  -46.805319
-    HTTP.get(Meteor.absoluteUrl("/data/bus_path.csv"), function(err,result) {
+    HTTP.get(Meteor.absoluteUrl("/data/shapes.txt"), function(err,result) {
        // console.log(result.content);
         var path_Data = result.content;
+        console.log(path_Data[3]);
         var parsedpath_Data = CSVToArray(path_Data, ",");
         parsedpath_Data.shift();
         //markers = parsedStopsData;
@@ -99,12 +98,6 @@ if (Meteor.isClient) {
         for (i in parsedpath_Data) {
           if (parsedpath_Data[prev][0] != parsedpath_Data[i][0]){ 
             var color = '#'+Math.floor(Math.random()*16777215).toString(16);
-
-    /*        var result = HTTP.call('GET','https://roads.googleapis.com/v1/snapToRoads?path=' + road + '&interpolate=true&key=AIzaSyCMy95QAeFlYo1ZW4I52OhDVLIi3gDfPJg',{},function(err,result){
-                  return result;
-                    });
-            console.log(result);
-*/
             prev=i;
             busPath = new google.maps.Polyline({
               path: busline,
@@ -115,16 +108,46 @@ if (Meteor.isClient) {
               });
             busline=[];
             road=' ';
-            busline.push({lat: parseFloat(parsedpath_Data[i][6]), lng: parseFloat(parsedpath_Data[i][7])});
-            road = road.concat(parsedpath_Data[i][6]+',' + parsedpath_Data[i][7]);
+            busline.push({lat: parseFloat(parsedpath_Data[i][1]), lng: parseFloat(parsedpath_Data[i][2])});
             busPath.setMap(map);
           }
           else{
-            busline.push({lat: parseFloat(parsedpath_Data[i][6]), lng: parseFloat(parsedpath_Data[i][7])});
-            road= road.concat(parsedpath_Data[i][6]+',' + parsedpath_Data[i][7])+'|';
+            busline.push({lat: parseFloat(parsedpath_Data[i][1]), lng: parseFloat(parsedpath_Data[i][2])});
           }
         };
     });
+
+  //radars
+HTTP.get(Meteor.absoluteUrl("/data/Latitude e Longitude.csv"), function(err,result) {
+        var radarData = result.content;
+        var parsedradarData = CSVToArray(radarData, ",");
+        console.log(parsedradarData[2]);
+        parsedradarData.shift();
+        var icon = {
+          url: "../img/car.png", // url
+          scaledSize: new google.maps.Size(30, 30), // scaled size
+          origin: new google.maps.Point(0,0), // origin
+          anchor: new google.maps.Point(0, 0) // anchor
+        };
+
+        console.log(parsedradarData.length);
+        for( i = 0; i < parsedradarData.length; i++ ) {
+              var point = {lat: parseFloat(parsedradarData[i][2]), lng: parseFloat(parsedradarData[i][3])};
+              newmarker = new google.maps.Marker({
+              position: point,
+              icon: icon,
+              map: map});
+          };
+
+    });
+
+
+
+
+
+
+
+
   }
 }
 

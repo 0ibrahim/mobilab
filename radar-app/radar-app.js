@@ -114,8 +114,6 @@ HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
          }
   return points};
 
-
-        console.log({lat: parseFloat(parsedpath_Data[1][3]), lng: parseFloat(parsedpath_Data[1][4])});
          /*for (i in parsedpath_Data){
           var next = new google.maps.LatLng(parseFloat(parsedpath_Data[i][1]), parseFloat(parsedpath_Data[i][2]));
           console.log(next);
@@ -169,11 +167,12 @@ HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
           origin: new google.maps.Point(0,0), // origin
           anchor: new google.maps.Point(0, 0) // anchor
         };
-          console.log(parsedaddr_Data2[5]);
-          //for( i = 0; i < 1; i++ ) {
-          i=5;
+          for( i = 1; i < 6; i++ ) {
           //parseFloat(l4[i])
-          HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address3TOstring(parsedaddr_Data2[5])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
+          var index = parsedaddr_Data2.indexOf(l4[i]);
+          console.log(parsedaddr_Data2[index]);
+          console.log(address3TOstring(parsedaddr_Data2[index]));
+          HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address3TOstring(parsedaddr_Data2[index])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
               bigdata = JSON.parse(result.content);
               //console.log(bigdata.results);
               //console.log(bigdata.results[0].geometry.location.lat);
@@ -185,8 +184,10 @@ HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
               position: point,
               icon: icon,
               map: map});
+          console.log(parsedaddr_Data2[parseFloat(l4[i])]);
+          console.log(address3TOstring(parsedaddr_Data2[parseFloat(l4[i])]));
                   });
-          //};
+          };
 
   });
 
@@ -425,6 +426,17 @@ function address3TOstring(loc_array){
     {
       //do not add
     }
+    else if (loc_array[i].includes('('))
+    {
+      add_string = add_string.concat('+sau+paulo');
+      for (j=i;j<loc_array.length;j++)
+      {
+        if(parseInt(loc_array[j]) == loc_array[j]){
+          add_string=loc_array[j].concat('+' + add_string);
+        }
+      }
+      return add_string;
+    }
     else if (loc_array[i].includes(','))
     {
       add_string = add_string.concat(loc_array[i].substring(0,loc_array[i].indexOf(",")));
@@ -435,7 +447,6 @@ function address3TOstring(loc_array){
           add_string=loc_array[j].concat('+' + add_string);
         }
       }
-      console.log(add_string);
       return add_string;
     }
     else

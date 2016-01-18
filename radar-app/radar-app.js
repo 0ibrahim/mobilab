@@ -167,26 +167,66 @@ HTTP.get(Meteor.absoluteUrl("/data/stops.txt"), function(err,result) {
           origin: new google.maps.Point(0,0), // origin
           anchor: new google.maps.Point(0, 0) // anchor
         };
-          for( i = 1; i < 6; i++ ) {
+        var radarids = parsedaddr_Data2.map(function(x) { return x[1] });
+        var radarids2 = parsedaddr_Data2.map(function(x) { return x[0] });
+
+          for( i = 0; i < l4.length; i++ ) {
           //parseFloat(l4[i])
-          var index = parsedaddr_Data2.indexOf(l4[i]);
-          console.log(parsedaddr_Data2[index]);
-          console.log(address3TOstring(parsedaddr_Data2[index]));
-          HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address3TOstring(parsedaddr_Data2[index])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
-              bigdata = JSON.parse(result.content);
-              //console.log(bigdata.results);
-              //console.log(bigdata.results[0].geometry.location.lat);
-              // console.log(result.content.location);
-              // console.log(result["location"]);
-              // console.log(result.content[0]);
-              var point = {lat: parseFloat(bigdata.results[0].geometry.location.lat), lng: parseFloat(bigdata.results[0].geometry.location.lng)};
-              newmarker = new google.maps.Marker({
-              position: point,
-              icon: icon,
-              map: map});
-          console.log(parsedaddr_Data2[parseFloat(l4[i])]);
-          console.log(address3TOstring(parsedaddr_Data2[parseFloat(l4[i])]));
+          var index = radarids.indexOf(l4[i]);
+          var index2 = radarids2.indexOf(l4[i]);
+          if (index != -1){
+            HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + address3TOstring(parsedaddr_Data2[index])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
+                bigdata = JSON.parse(result.content);
+                console.log(bigdata.results);
+                if(isEmpty(bigdata.results)){
+                  console.log(address3TOstring(parsedaddr_Data2[index]));
+                }
+                //console.log(bigdata.results[0].geometry.location.lat);
+                // console.log(result.content.location);
+                // console.log(result["location"]);
+                // console.log(result.content[0]);
+                var point = {lat: parseFloat(bigdata.results[0].geometry.location.lat), lng: parseFloat(bigdata.results[0].geometry.location.lng)};
+                var infowindow = new google.maps.InfoWindow({
+                    content: l4[i]
                   });
+
+                newmarker = new google.maps.Marker({
+                position: point,
+                icon: icon,
+                label: l4[i],
+                map: map});
+                  });
+                
+          }
+          else if (index2 != -1)
+          {
+            HTTP.call('GET','https://maps.googleapis.com/maps/api/geocode/json?address=' + addressTOstring(parsedaddr_Data2[index2])+'&key=AIzaSyA_2Qi3MVVByu9nwkBPNt2hYUn7SHooP10',{},function(err,result){
+                bigdata = JSON.parse(result.content);
+                //console.log(bigdata.keys);
+                 if(isEmpty(bigdata.results)){
+                  console.log('index2');
+                  console.log(addressTOstring(parsedaddr_Data2[index2]));
+                }
+                //console.log(bigdata.results[0].geometry.location.lat);
+                // console.log(result.content.location);
+                // console.log(result["location"]);
+                // console.log(result.content[0]);
+                var point = {lat: parseFloat(bigdata.results[0].geometry.location.lat), lng: parseFloat(bigdata.results[0].geometry.location.lng)};
+                newmarker = new google.maps.Marker({
+                position: point,
+                icon: icon,
+                label: l4[i],
+                map: map});
+                  });
+          }
+          else{
+            //do nothing
+          }
+
+
+
+
+          
           };
 
   });
@@ -280,6 +320,7 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
     console.log("this is running");
+    infowindow.open(map, newmarker);
 
 
   });
@@ -458,4 +499,23 @@ function address3TOstring(loc_array){
   }
 
 return add_string;
+}
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
 }

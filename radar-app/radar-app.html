@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index">Radar Analysis</a>
+                <a class="navbar-brand" href="/heat">Radar Analysis</a>
             </div>
 
             <div class="navbar-default sidebar" role="navigation">
@@ -71,9 +71,6 @@
         <div class="col-lg-8">
             <h1 class="page-header">Heat map of buses and cars</h1>
             <div class="panel panel-default">
-            <!-- <div class="panel-heading">
-              <i class="fa fa-bar-chart-o fa-fw"></i> Heat map
-            </div> -->
             <div class="panel-body">
               <div id="map-canvas" style="height: 800px; width: 800px"></div>
             </div>
@@ -94,6 +91,36 @@
               <h5>Per district</h5>
             </div>
             <div class="panel-body">
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4><b>Bus lines x District</b></h4>
+                    <img src="/img/bus_m_3.png" style="width:580px;" alt="Bus lines x District">
+                  </div>
+                  <div class="col-md-6">
+                    <h4><b>Metro lines x District</b></h4>
+                    <img src="/img/metro_m3.png" style="width:580px;" alt="Metro lines x District">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4><b>Train lines x District</b></h4>
+                    <img src="/img/train_m2.png" style="width:580px;" alt="Train lines x District">
+                  </div>
+                  <div class="col-md-6">
+                    <h4><b>Bus, metro and train lines x District</b></h4>
+                    <img src="/img/center.png" style="width:580px;" alt="Bus, metro and train lines">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4><b>Poorest District</b></h4>
+                    <img src="/img/maispobre.png" style="width:580px;" alt="Poorest district">
+                  </div>
+                  <div class="col-md-6">
+                    <h4><b>Richest District</b></h4>
+                    <img src="/img/maisrico.png" style="width:580px;" alt="Richest district">
+                  </div>
+              </div>
             </div>
           </div> 
         </div>
@@ -107,13 +134,42 @@
         <div class="col-lg-12">
             <h1 class="page-header">Velocity Analysis</h1>
             <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3>Velocity vs. Number of vehicles/hour</h3>
-            </div>
-            <div class="panel-body">
-              <div id="morris-bar-chart"></div>
-            </div>
-          </div> 
+              <div class="panel-heading">
+                <h3>Velocity vs. Number of vehicles/hour</h3>
+              </div>
+              <div class="panel-body">
+                <!-- <div id="morris-bar-chart"></div> -->
+                <div class="row">
+                  <div class="col-md-7">
+                    <h4><b>Radar Sectors</b></h4>
+                    <img src="/img/setores.png" style="width:580px;" alt="Richest district">
+                    <figcaption>
+                    <p><b>L1 - 6609:</b> Avenida General Edgar Facó, 676</p>
+                    <p><b>L1 - 6626:</b> Marginal Tietê, Km 22</p>
+                    <p><b>L1 - 6658:</b> Avenida Engenheiro Caetano Alvares, 1358</p>
+                    <p><b>L2 - 4221:</b> Avenida São Miguel, 105</p>
+                    <p><b>L2 - 4242:</b> Rua Doutor Assis Ribeiro, 414</p>
+                    <p><b>L2 - 4220:</b> Avenida Rio das Pedras, 2021</p>
+                    <p><b>L3 - 5127:</b> Rua Sena Madureira, 1355</p>
+                    <p><b>L3 - 5115:</b> Avenida Das Juntas Provisórias, 295</p>
+                    <p><b>L3 - 5103:</b> Avenida 23 de maio</p>
+                    <p><b>L4 - 2402:</b> Avenida Nossa Senhora do Sabará, 421</p>
+                    <p><b>L4 - 2401:</b> Avenida Interlagos</p>
+                    <p><b>L4 - 2417:</b> Estrada de Itapecerica, 1742</p></figcaption>
+                  </div>
+                  <div class="col-md-4">
+                    <h4><b>L1 Sector</b></h4>
+                    <img src="/img/L1-velocity.jpg" style="width:480px;" alt="L1">
+                    <h4><b>L2 Sector</b></h4>
+                    <img src="/img/L2-velocity.jpg" style="width:480px;" alt="L2">
+                    <h4><b>L3 Sector</b></h4>
+                    <img src="/img/L3-velocity.jpg" style="width:480px;" alt="L3">
+                    <h4><b>L4 Sector</b></h4>
+                    <img src="/img/L4-velocity.jpg" style="width:480px;" alt="L4">
+                  </div>
+                </div>
+              </div>
+            </div> 
         </div>
     </div>
   </div>

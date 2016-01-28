@@ -65,7 +65,7 @@ GoogleMaps.ready('map', function(map) {
 
 
 //heatmap
-
+/*
 HTTP.get(Meteor.absoluteUrl("/data/shapes.txt"), function(err,result) {
         var path_Data = result.content;
         var parsedpath_Data = CSVToArray(path_Data, ",");
@@ -86,7 +86,7 @@ HTTP.get(Meteor.absoluteUrl("/data/shapes.txt"), function(err,result) {
     map: map
   });
       });
-
+*/
 //parsing addresses
 /*
   HTTP.get(Meteor.absoluteUrl("/data/addresses.csv"), function(err,result) {
@@ -138,7 +138,7 @@ newmarker = new google.maps.Marker({
 
 
 
-
+/*
 
 HTTP.get(Meteor.absoluteUrl("/data/result.csv"), function(err,result) {
           var gradient = ["#00F5F5", "#02D6F6", "#05B7F7", "#0799F8", "#0A7AFA", "#0D5BFB", "#0F3DFC", "#121EFD", "#1500FF"]
@@ -163,7 +163,7 @@ HTTP.get(Meteor.absoluteUrl("/data/result.csv"), function(err,result) {
 
           });
 
-
+*/
 //addresses3
 /*
   HTTP.get(Meteor.absoluteUrl("/data/all_addresses.csv"), function(err,result) {
@@ -300,8 +300,54 @@ HTTP.get(Meteor.absoluteUrl("/data/radarl4.csv"), function(err,result) {
     });
 */
 
+//https://roads.googleapis.com/v1/snapToRoads?path=-35.27801,149.12958|-35.28032,149.12907|-35.28099,149.12929|-35.28144,149.12984|-35.28194,149.13003|-35.28282,149.12956|-35.28302,149.12881|-35.28473,149.12836&interpolate=true&key=YOUR_API_KEY
+
+//busline = [{lat: , lng: }, {lat: , lng: }]
+
+HTTP.call('GET','https://roads.googleapis.com/v1/snapToRoads?path=-23.581390,-46.584950|-23.5597046,-46.6699925|-23.5676098,-46.6836783&interpolate=true&key=AIzaSyBL02i2Sny71qfP7PYV1Gg7DJ1WiigiYBs',{},function(err,result){
+bigdata = JSON.parse(result.content);
+console.log(bigdata);
+busline = [];
+console.log(parseFloat(bigdata.snappedPoints[0].location.latitude));
+for (i =0; i<bigdata.snappedPoints.length; i++)
+{
+  
+  busline.push({lat: parseFloat(bigdata.snappedPoints[i].location.latitude),lng: parseFloat(bigdata.snappedPoints[i].location.longitude)}); 
+}
+console.log(busline);
+busPath = new google.maps.Polyline({
+              path: busline,
+              geodesic: true,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1.0,
+              strokeWeight: 5
+              });
+busPath.setMap(map);
+});
 
 
+
+
+HTTP.call('GET','https://roads.googleapis.com/v1/snapToRoads?path=-23.6176772,-46.6817542|-23.5848247,-46.6756099|-23.5514809,-46.6652497|-23.5410369,-46.7193649|-23.5383998,-46.7082337&interpolate=true&key=AIzaSyBL02i2Sny71qfP7PYV1Gg7DJ1WiigiYBs',{},function(err,result){
+bigdata = JSON.parse(result.content);
+console.log(bigdata);
+busline = [];
+console.log(parseFloat(bigdata.snappedPoints[0].location.latitude));
+for (i =0; i<bigdata.snappedPoints.length; i++)
+{
+  
+  busline.push({lat: parseFloat(bigdata.snappedPoints[i].location.latitude),lng: parseFloat(bigdata.snappedPoints[i].location.longitude)}); 
+}
+console.log(busline);
+busPath = new google.maps.Polyline({
+              path: busline,
+              geodesic: true,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1.0,
+              strokeWeight: 5
+              });
+busPath.setMap(map);
+});
 
 
   /*

@@ -28,10 +28,9 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
     <script src="bower_components/raphael/raphael-min.js"></script>
-    <script src="bower_components/morrisjs/morris.min.js"></script>
-    <script src="js/morris-data.js"></script>
+    <!--script src="bower_components/morrisjs/morris.min.js"></script>
+    <script src="js/morris-data.js"></script-->
     <script src="dist/js/sb-admin-2.js"></script>
-
 </head>
 
 <body>
@@ -44,116 +43,134 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Radar Analysis</a>
+                <a class="navbar-brand" href="/heat">Radar Analysis</a>
             </div>
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="radar-app.html"><i class="fa fa-picture-o"></i> Heat map</a>
+                          <a href="/heat"><i class="fa fa-bar-chart-o fa-fw"></i> Volume Analysis</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Flot Charts</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            </ul>
+                            <a href="/area"><i class="fa fa-bar-chart-o fa-fw"></i> Social Analysis</a>
+                        </li>
+                        <li>
+                            <a href="/bar"><i class="fa fa-bar-chart-o fa-fw"></i> Velocity Analysis</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
-        <div id="page-wrapper">
-          <div class="row">
-              <div class="col-lg-12">
-                  <h1 class="page-header">Heat map of buses and cars</h1>
-              </div>
-          </div>
-
-          <div id="wrapper">
-            <div class="row">
-                <div class="col-lg-8">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <i class="fa fa-bar-chart-o fa-fw"></i> Heat map
-                    </div>
-                    <div class="panel-body">
-                      {{> hello}}
-                    </div>
-                  </div> 
-                </div>
-              </div>
-            </div>
-                    <!-- <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-area-chart"></div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li> 
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div>-->
-                <!-- <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
-                            <a href="#" class="btn btn-default btn-block">View Details</a>
-                        </div>
-                    </div>
-                </div> 
-            </div>-->
-        </div>
     </div>
-  <!-- </div> -->
-
 </body>
 
-<template name="hello">
-  <!-- <button>Add Bus Stops</button> -->
-  <div id="map-canvas" style="height: 800px; width: 800px"></div>
+<template name="heat">
+  <div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="page-header">Heat map of buses and cars</h1>
+            <div class="panel panel-default">
+            <div class="panel-body">
+              <div id="map-canvas" style="height: 800px; width: 800px"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<template name="area">
+  <div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Social Analysis</h1>
+            <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3>Public transportation vs. Monthly Income</h3>
+              <h5>Per district</h5>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4><b>Bus lines x District</b></h4>
+                    <img src="/img/bus_m_3.png" style="width:580px;" alt="Bus lines x District">
+                  </div>
+                  <div class="col-md-6">
+                    <h4><b>Metro lines x District</b></h4>
+                    <img src="/img/metro_m3.png" style="width:580px;" alt="Metro lines x District">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4><b>Train lines x District</b></h4>
+                    <img src="/img/train_m2.png" style="width:580px;" alt="Train lines x District">
+                  </div>
+                  <div class="col-md-6">
+                    <h4><b>Bus, metro and train lines x District</b></h4>
+                    <img src="/img/center.png" style="width:580px;" alt="Bus, metro and train lines">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4><b>Poorest District</b></h4>
+                    <img src="/img/maispobre.png" style="width:580px;" alt="Poorest district">
+                  </div>
+                  <div class="col-md-6">
+                    <h4><b>Richest District</b></h4>
+                    <img src="/img/maisrico.png" style="width:580px;" alt="Richest district">
+                  </div>
+              </div>
+            </div>
+          </div> 
+        </div>
+    </div>
+  </div>
+</template>
+
+<template name="bar">
+  <div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Velocity Analysis</h1>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3>Velocity vs. Number of vehicles/hour</h3>
+              </div>
+              <div class="panel-body">
+                <!-- <div id="morris-bar-chart"></div> -->
+                <div class="row">
+                  <div class="col-md-7">
+                    <h4><b>Radar Sectors</b></h4>
+                    <img src="/img/setores.png" style="width:580px;" alt="Richest district">
+                    <figcaption>
+                    <p><b>L1 - 6609:</b> Avenida General Edgar Facó, 676</p>
+                    <p><b>L1 - 6626:</b> Marginal Tietê, Km 22</p>
+                    <p><b>L1 - 6658:</b> Avenida Engenheiro Caetano Alvares, 1358</p>
+                    <p><b>L2 - 4221:</b> Avenida São Miguel, 105</p>
+                    <p><b>L2 - 4242:</b> Rua Doutor Assis Ribeiro, 414</p>
+                    <p><b>L2 - 4220:</b> Avenida Rio das Pedras, 2021</p>
+                    <p><b>L3 - 5127:</b> Rua Sena Madureira, 1355</p>
+                    <p><b>L3 - 5115:</b> Avenida Das Juntas Provisórias, 295</p>
+                    <p><b>L3 - 5103:</b> Avenida 23 de maio</p>
+                    <p><b>L4 - 2402:</b> Avenida Nossa Senhora do Sabará, 421</p>
+                    <p><b>L4 - 2401:</b> Avenida Interlagos</p>
+                    <p><b>L4 - 2417:</b> Estrada de Itapecerica, 1742</p></figcaption>
+                  </div>
+                  <div class="col-md-4">
+                    <h4><b>L1 Sector</b></h4>
+                    <img src="/img/L1-velocity.jpg" style="width:480px;" alt="L1">
+                    <h4><b>L2 Sector</b></h4>
+                    <img src="/img/L2-velocity.jpg" style="width:480px;" alt="L2">
+                    <h4><b>L3 Sector</b></h4>
+                    <img src="/img/L3-velocity.jpg" style="width:480px;" alt="L3">
+                    <h4><b>L4 Sector</b></h4>
+                    <img src="/img/L4-velocity.jpg" style="width:480px;" alt="L4">
+                  </div>
+                </div>
+              </div>
+            </div> 
+        </div>
+    </div>
+  </div>
 </template>

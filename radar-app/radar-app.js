@@ -1,20 +1,49 @@
-
 Stops = new Mongo.Collection("stops");
 Radars = new Mongo.Collection("radars");
 
-
-
 if (Meteor.isClient) {
+
   // counter starts at 0
   Session.setDefault('counter', 0);
 
-  Template.hello.helpers({
+  Router.route('/heat');
+
+  // Router.route('/area');
+
+  Router.route('/bar');
+
+  Router.route('/area');
+
+  Template.heat.helpers({
     counter: function () {
       return Session.get('counter');
     }
   });
 
-  Template.hello.events({
+  // Template.area.helpers({
+  //   init: function() {
+  //     Meteor.defer(function(){
+  //       google.charts.load('current', {packages: ['corechart']});
+  //       google.charts.setOnLoadCallback(drawchart);
+  //       function drawchart() {
+  //         // var y = Meteor.call('findRadars', '2528');
+  //         var y = Radars.find();
+  //         console.log(y);
+  //         var data = new google.visualization.DataTable();
+  //         data.addColumn('string', 'Element');
+  //         data.addColumn('number', 'Percentage');
+  //         data.addRows([
+  //           ['2528', y],
+  //         ]);
+
+  //         var chart = new google.visualization.PieChart(document.getElementById("pie_chart"));
+  //         chart.draw(data, null);
+  //       }
+  //     });
+  //   }
+  // });
+
+  Template.heat.events({
     'click button': function () {
       // increment the counter when button is clicked
       //Session.set('counter', Session.get('counter') + 1);    v
@@ -45,7 +74,7 @@ if (Meteor.isClient) {
     });
     }
   });
- 
+
 /*
 Template.hello.onCreate(function){
 GoogleMaps.ready('map', function(map) {
@@ -54,7 +83,8 @@ GoogleMaps.ready('map', function(map) {
 */
 
 
- Template.hello.rendered = function (markers) {
+ // Template.hello.rendered = function (markers) {
+  Template.heat.rendered = function (markers) {
     var mapOptions = {
       center: new google.maps.LatLng(-23.397, -46.644),
       zoom: 10
@@ -431,7 +461,6 @@ busPath.setMap(map);
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
     console.log("this is running");
    // infowindow.open(map, newmarker);
 
